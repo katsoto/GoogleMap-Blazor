@@ -1,0 +1,83 @@
+﻿@page "/registro"
+@using PP.Modelos
+@inject prubContext con  
+@inject IJSRuntime JSRuntime
+
+<h3>Registro_Robo</h3>
+<div class="mr-2">
+
+
+    <EditForm Model="caso" OnValidSubmit="robovalido">
+        <DataAnnotationsValidator />
+        <div class="form-group">
+            <label for="nombre">ID</label>
+            <input type="number" @bind="caso.Id" class="form-control">
+        </div>
+        <div class="input-group w-50">
+            <label for="cedula" class="input-group-text">Cedula</label>
+            <input id="cedula" type="text" @bind-value="caso.Cedula" class="form-control" maxlength="11">
+        </div>
+        <div class="form-group">
+            <label for="nombre">Nombre</label>
+            <input type="text" @bind="caso.Nombre" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="fecha">Fecha del robo</label>
+            <input type="datetime" @bind="caso.Fecha" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="nombre">Que se robaron</label>
+            <input type="text" @bind="caso.Robo" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="nombre">Sitio del robo</label>
+            <input type="text" @bind="caso.Sitio" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="nombre">Valor del robo</label>
+            <input type="number" @bind="caso.Valor" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="nombre">Longitud</label>
+            <input type="text" @bind="caso.Longitud" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="nombre">Latitud</label>
+            <input type="text" @bind="caso.Latitud" class="form-control">
+        </div>
+        <center><button type="Submit" class="btn btn-success" name="action">Agregar Robo</button></center>
+
+
+
+
+
+
+    </EditForm>
+    
+</div>
+@code {
+    private string fallo = "";
+
+
+    private Caso caso = new Caso
+    {
+        Fecha = DateTime.Today
+    };
+
+    private async Task robovalido()
+    {
+        try
+        {  
+            con.Add(caso);
+            con.SaveChanges();
+        }
+
+        catch (Exception ex)
+        {
+            fallo = ex.InnerException.Message;
+
+        }
+
+
+    }
+}

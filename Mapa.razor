@@ -1,0 +1,24 @@
+﻿@page "/mapa"
+@using PP.Modelos
+@inject prubContext con 
+@inject IJSRuntime JSRuntime
+
+
+<h3>Mapa</h3>
+
+<div class="input-group-append">
+    <div id="map" style="height:500px;width:100%;"></div>
+</div>
+
+
+
+@code {
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender) { 
+            await JSRuntime.InvokeVoidAsync("initialize", con.Caso.ToList<Caso>());
+        } 
+    }
+}
+
